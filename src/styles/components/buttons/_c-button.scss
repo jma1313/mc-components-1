@@ -12,6 +12,7 @@
   border-radius: 4px;
   color: #fff;
   transition: background 250ms ease;
+  white-space: nowrap;
 
   &:hover {
     background: $mc-color-primary-hover;

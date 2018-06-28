@@ -24,6 +24,8 @@ const Container = () =>
   <Button primary>Hello</Button>
 ```
 
+In order to reproduce videos using the BrightcoveVideo component, we need to provide two environment variables: `BRIGHTCOVE_ACCOUNT_ID`, `BRIGHTCOVE_PLAYER_ID`. Without this variables the video will not appear.
+
 ## Development
 
 1. Clone the repository
