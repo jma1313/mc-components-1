@@ -1,7 +1,7 @@
 {
   "name": "mc-components",
-  "version": "0.2.0",
-  "main": "./dist/components/index.js",
+  "version": "0.2.4",
+  "main": "./dist/index.js",
   "author": "Masterclass <engineering@masterclass.com>",
   "homepage": "https://github.com/yankaindustries/mc-components",
   "bugs": {
@@ -20,7 +20,7 @@
     "build:js": "NODE_ENV=production babel ./src --out-dir ./dist --ignore spec.js,test.js,stories.js",
     "prebuild:css": "node-sass src/styles/index.scss dist/styles/css/mastersass.css",
     "build:css": "postcss -r dist/styles/css/mastersass.css",
-    "build:css-vendor": "node-sass src/styles/libraries/_libraries.scss dist/styles/css/vendor.css",
+    "build:css-vendor": "node-sass src/styles/libraries/_libraries.scss dist/styles/css/vendor.css && postcss -r dist/styles/css/vendor.css",
     "build:scss": "cpx -p './src/styles/**/*.scss' ./dist/styles/scss",
     "build:styles": "yarn build:scss && yarn build:css",
     "test": "jest",
@@ -31,9 +31,9 @@
     "lint:style": "stylelint \"src/styles/**/*.scss\" || echo \"Style lint failed.\"",
     "lint": "yarn lint:js && yarn lint:style",
     "precommit": "lint-staged",
-    "preversion": "yarn test && yarn build && git add -A . ",
-    "version": "git push origin develop && git push origin develop --tags",
-    "postversion": "npm publish"
+    "preversion": "yarn test",
+    "version": "yarn build && git add -A .",
+    "postversion": "git push origin develop && git push origin develop --tags && npm publish"
   },
   "devDependencies": {
     "@masterclass/eslint-config": "yankaindustries/eslint-config-masterclass#1.0.2",
@@ -61,6 +61,7 @@
     "file-loader": "^1.1.11",
     "husky": "^0.14.3",
     "jest": "^23.2.0",
+    "jsx-to-string": "^1.4.0",
     "lint-staged": "^7.2.0",
     "node-sass": "^4.9.0",
     "postcss": "^6.0.22",
@@ -68,6 +69,7 @@
     "prettier-eslint-cli": "^4.7.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-highlight": "^0.12.0",
     "react-test-renderer": "^16.4.1",
     "regenerator-runtime": "^0.12.0",
     "rimraf": "^2.6.2",

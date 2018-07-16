@@ -1,9 +1,8 @@
 # MasterClass Components
 
 [![NPM version](https://img.shields.io/npm/v/mc-components.svg?style=flat)](https://npmjs.org/package/mc-components)
-[![CircleCI](https://circleci.com/gh/bernabe9/mc-components.svg?style=shield)](https://circleci.com/gh/bernabe9/mc-components)
-[![Build status: Linux](https://travis-ci.org/bernabe9/mc-components.svg?branch=master)](https://travis-ci.org/bernabe9/mc-components)
-[![Dependency Status](https://img.shields.io/david/bernabe9/mc-components.svg)](https://david-dm.org/bernabe9/mc-components)
+[![CircleCI](https://circleci.com/gh/yankaindustries/mc-components.svg?style=shield)](https://circleci.com/gh/yankaindustries/mc-components)
+[![Dependency Status](https://img.shields.io/david/yankaindustries/mc-components.svg)](https://david-dm.org/yankaindustries/mc-components)
 
 mc-components aims to provide primitive components to build user interfaces in MasterClass.
 
@@ -36,9 +35,14 @@ const Container = () =>
 # Contributing
 1. Clone the repository
 2. Install dependencies with `yarn install`
-3. Start storybook: `yarn start`
+3. Create a branch off `develop`
+4. Start storybook: `yarn start`
 
 All changes are hot-reloaded and you'll be able to see components being modified live as you work.
+
+## Submit your code
+  - Create a PR with your changes
+  - Once approved, it will be merged into develop and released with the next version bump.
 
 For further information on linting, versioning, and releasing, please see the [wiki for documentation](https://github.com/yankaindustries/mc-components/wiki/Contributing)
 

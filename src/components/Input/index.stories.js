@@ -31,7 +31,7 @@ const infoProps = {
   propTablesExclude: [Input],
 }
 
-storiesOf('components|Input', module)
+storiesOf('components|Forms/Input', module)
   .add('default',
     withInfo({
       ...infoProps,
@@ -79,5 +79,12 @@ storiesOf('components|Input', module)
       ...infoProps,
     })(() =>
       <Input placeholder='My email' disabled />,
+    ),
+  )
+  .add('with warning',
+    withInfo({
+      ...infoProps,
+    })(() =>
+      <Input placeholder='My email' warning='Did you mean johndoe@gmail.com?' />,
     ),
   )
