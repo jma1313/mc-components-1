@@ -3,8 +3,8 @@ import { string, number, arrayOf, shape, bool } from 'prop-types'
 import cn from 'classnames'
 
 import NavBarMenuV2 from '../NavBarMenuV2'
+import HeaderCourseNameV2 from '../HeaderCourseNameV2'
 import logo from '../../assets/header/only-logo.png'
-import defaultAvatar from '../../assets/header/default-avatar@2x.png'
 
 export default class HeaderV2 extends PureComponent {
   static propTypes = {
@@ -18,6 +18,8 @@ export default class HeaderV2 extends PureComponent {
     avatar: string,
     mobileBreakpoint: number,
     isSolid: bool,
+    instructorName: string,
+    courseName: string,
   }
 
   static defaultProps = {
@@ -38,21 +40,7 @@ export default class HeaderV2 extends PureComponent {
     // eslint-disable-next-line
     const width = window.innerWidth > 0 ? window.innerWidth : screen.width;
     const isMobile = width < props.mobileBreakpoint
-    this.state = { isMobile, isMenuOpened: false }
-  }
-
-  handleToggleMenu = () => {
-    debugger;
-    const { isMenuOpened } = this.state
-    this.setState({ isMenuOpened: !isMenuOpened })
-  }
-
-  handleClickOutsideMenu = () => {
-    debugger;
-    const { isMenuOpened } = this.state
-    if (isMenuOpened) {
-      this.setState({ isMenuOpened: false })
-    }
+    this.state = { isMobile }
   }
 
   render () {
@@ -61,8 +49,9 @@ export default class HeaderV2 extends PureComponent {
       name,
       avatar,
       menuLinks,
+      instructorName,
+      courseName,
     } = this.props
-    const { isMenuOpened } = this.state
 
     const navCn = cn(
       'header-v2__nav',
@@ -79,7 +68,10 @@ export default class HeaderV2 extends PureComponent {
             </a>
             <div className='header-v2__content'>
               <div className='header-v2__left'>
-                test
+                <HeaderCourseNameV2
+                  instructorName={instructorName}
+                  courseName={courseName}
+                />
               </div>
               <div className='header-v2__right'>
                 <div className='header-v2__nav-item'>
@@ -87,22 +79,11 @@ export default class HeaderV2 extends PureComponent {
                     other link
                   </span>
                 </div>
-                <div className='header-v2__nav-item'>
-                  <div className='header-v2__user' onClick={this.handleToggleMenu}>
-                    <img
-                      src={avatar || defaultAvatar}
-                      className='header-v2__user__avatar'
-                    />
-                    <span className='header-v2__nav-item__label'>
-                      {name}
-                    </span>
-                    <NavBarMenuV2
-                      isOpen={isMenuOpened}
-                      onClickOutside={this.handleClickOutsideMenu}
-                      menuLinks={menuLinks}
-                    />
-                  </div>
-                </div>
+                <NavBarMenuV2
+                  menuLinks={menuLinks}
+                  name={name}
+                  avatar={avatar}
+                />
               </div>
             </div>
           </div>

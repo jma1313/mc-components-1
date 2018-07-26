@@ -28,3 +28,13 @@ storiesOf('components|Structure/HeaderV2', module)
       />
     )),
   )
+  .add(
+    'with instructor and course name',
+    withInfo()(() => (
+      <HeaderV2
+        name='berna'
+        instructorName='Gordan Ramsay'
+        courseName='Teaches cooking'
+      />
+    )),
+  )
