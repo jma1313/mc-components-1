@@ -38,3 +38,9 @@ storiesOf('components|Structure/HeaderV2', module)
       />
     )),
   )
+  .add(
+    'without user name',
+    withInfo()(() =>
+      <HeaderV2 />,
+    ),
+  )

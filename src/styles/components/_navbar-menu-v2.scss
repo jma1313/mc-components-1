@@ -1,6 +1,7 @@
 .navbar-menu-v2 {
   $header-height: 56px;
 
+  visibility: hidden;
   position: absolute;
   top: $header-height;
   right: 0;
@@ -10,13 +11,14 @@
   border: 1px solid rgba($mc-light, 0.2);
   border-radius: 4px;
   margin: 0;
-  z-index: -1;
+  z-index: 10;
   opacity: 0;
   transition: opacity 150ms ease;
   padding: 8px 32px;
 
   &--open {
     opacity: 1;
+    visibility: visible;
   }
 
   &__item {
@@ -44,48 +46,10 @@
     display: block;
   }
 
-  // mobile
-  // @media (max-width: 768px) {
-  //   position: static;
-  //   width: 100%;
-
-  //   &__item {
-  //     opacity: 0;
-
-  //     @include fade-in-opacity();
-
-  //     @for $i from 1 through 15 {
-  //       &:nth-child(#{$i}) {
-  //         animation-delay: #{$i * 100}ms;
-  //       }
-  //     }
-
-  //     .badge {
-  //       font-size: 17px;
-  //     }
-
-  //     &:hover {
-  //       .navbar-menu__item-link {
-  //         padding: 20px 16px;
-  //       }
-  //     }
-  //   }
-
-  //   &__item--centered {
-  //     .navbar-menu__item-link {
-  //       padding: 20px 16px;
-  //     }
-  //   }
-
-  //   &__item-link {
-  //     padding: 20px 16px;
-  //     font-size: 17px;
-  //     letter-spacing: 1px;
-  //     text-transform: none;
-  //   }
-
-  //   &__item-helper {
-  //     color: rgba(255, 255, 255, 0.4);
-  //   }
-  // }
+  // Mobile only
+  @media (max-width: 768px) {
+    border: 0;
+    padding: 8px 24px;
+    width: 100vw;
+  }
 }

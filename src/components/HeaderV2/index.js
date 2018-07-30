@@ -1,22 +1,22 @@
 import React, { PureComponent } from 'react'
-import { string, number, arrayOf, shape, bool } from 'prop-types'
+import { string, arrayOf, shape, bool } from 'prop-types'
 import cn from 'classnames'
 
 import NavBarMenuV2 from '../NavBarMenuV2'
 import HeaderCourseNameV2 from '../HeaderCourseNameV2'
 import logo from '../../assets/header/only-logo.png'
+import wordmark from '../../assets/logo-wordmark.svg'
 
 export default class HeaderV2 extends PureComponent {
   static propTypes = {
-    name: string.isRequired,
     menuLinks: arrayOf(
       shape({
         label: string.isRequired,
         href: string.isRequired,
       }),
     ),
+    name: string,
     avatar: string,
-    mobileBreakpoint: number,
     isSolid: bool,
     instructorName: string,
     courseName: string,
@@ -34,13 +34,15 @@ export default class HeaderV2 extends PureComponent {
     isSolid: true,
   }
 
-  constructor (props) {
-    super(props)
+  state = { isMenuOpened: false }
 
-    // eslint-disable-next-line
-    const width = window.innerWidth > 0 ? window.innerWidth : screen.width;
-    const isMobile = width < props.mobileBreakpoint
-    this.state = { isMobile }
+  handleCloseMenu = () => {
+    this.setState({ isMenuOpened: false })
+  }
+
+  handleToggleMenu = () => {
+    const { isMenuOpened } = this.state
+    this.setState({ isMenuOpened: !isMenuOpened })
   }
 
   render () {
@@ -52,11 +54,13 @@ export default class HeaderV2 extends PureComponent {
       instructorName,
       courseName,
     } = this.props
+    const { isMenuOpened } = this.state
 
     const navCn = cn(
       'header-v2__nav',
       { 'header-v2__nav--solid': isSolid },
       { 'header-v2__nav--gradient': !isSolid },
+      { 'header-v2__nav--menu-opened': isMenuOpened },
     )
 
     return (
@@ -66,6 +70,9 @@ export default class HeaderV2 extends PureComponent {
             <a className='header-v2__logo' href='/'>
               <img src={logo} alt='Logo' />
             </a>
+            <a className='header-v2__wordmark' href='/'>
+              <img src={wordmark} alt='Logo Wordmark' />
+            </a>
             <div className='header-v2__content'>
               <div className='header-v2__left'>
                 <HeaderCourseNameV2
@@ -74,15 +81,13 @@ export default class HeaderV2 extends PureComponent {
                 />
               </div>
               <div className='header-v2__right'>
-                <div className='header-v2__nav-item'>
-                  <span className='header-v2__nav-item__label'>
-                    other link
-                  </span>
-                </div>
                 <NavBarMenuV2
                   menuLinks={menuLinks}
                   name={name}
                   avatar={avatar}
+                  isOpen={isMenuOpened}
+                  onToggle={this.handleToggleMenu}
+                  onClose={this.handleCloseMenu}
                 />
               </div>
             </div>

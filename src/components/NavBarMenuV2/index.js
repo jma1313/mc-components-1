@@ -1,37 +1,35 @@
 import React, { PureComponent } from 'react'
-import { arrayOf, shape, string } from 'prop-types'
+import { arrayOf, shape, string, bool, func } from 'prop-types'
 import cn from 'classnames'
 
 import ClickOutside from '../ClickOutside'
+import MobileNavButtonV2 from '../MobileNavButtonV2'
 import defaultAvatar from '../../assets/header/default-avatar@2x.png'
 
 export default class NavBarMenuV2 extends PureComponent {
   static propTypes = {
-    name: string.isRequired,
     menuLinks: arrayOf(shape({
       label: string.isRequired,
       href: string.isRequired,
     })).isRequired,
+    isOpen: bool.isRequired,
+    onToggle: func.isRequired,
+    onClose: func.isRequired,
+    name: string,
     avatar: string,
-  }
-
-  state = { isOpen: false }
-
-
-  handleClickOutside = () => {
-    this.setState({ isOpen: false })
-  }
-
-  handleToggleMenu = () => {
-    const { isOpen } = this.state
-    this.setState({ isOpen: !isOpen })
   }
 
   container = React.createRef()
 
   render () {
-    const { menuLinks, name, avatar } = this.props
-    const { isOpen } = this.state
+    const {
+      menuLinks,
+      name,
+      avatar,
+      isOpen,
+      onToggle,
+      onClose,
+    } = this.props
 
     const dropDownClassName = cn(
       'navbar-menu-v2',
@@ -45,13 +43,17 @@ export default class NavBarMenuV2 extends PureComponent {
     return (
       <ClickOutside
         divRef={this.container}
-        onClickOutside={this.handleClickOutside}
+        onClickOutside={onClose}
       >
         <div
           className={navItemClassName}
           ref={this.container}
-          onClick={this.handleToggleMenu}
+          onClick={onToggle}
         >
+          <MobileNavButtonV2
+            isOpen={isOpen}
+            onClick={onToggle}
+          />
           <div className='header-v2__user'>
             <img
               src={avatar || defaultAvatar}
