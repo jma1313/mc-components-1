@@ -51,7 +51,7 @@ const videos = {
   240: {
     attributes: {
       id: 240,
-      brightcoveId: '5450137526001',
+      brightcoveId: '5707329402001',
     },
   },
 }

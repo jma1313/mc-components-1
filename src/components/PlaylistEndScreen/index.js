@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { string, number, func, bool } from 'prop-types'
 
 import Timer from '../Timer'
+import ProgressRing from '../ProgressRing'
 import './index.scss'
 
 export default class PlaylistEndScreen extends PureComponent {
@@ -26,6 +27,19 @@ export default class PlaylistEndScreen extends PureComponent {
     return position
   }
 
+  renderTimer = ({ time, totalTime }) => {
+    if (time === 0) {
+      return null
+    }
+
+    return (
+      <ProgressRing
+        time={time}
+        progress={(1 - (time / totalTime)) * 100}
+      />
+    )
+  }
+
   render () {
     const {
       playlistName,
@@ -46,7 +60,9 @@ export default class PlaylistEndScreen extends PureComponent {
           {description}
         </p>
         {showTimer &&
-          <Timer time={6} onFinish={this.handleChangeTrack} />
+          <Timer time={6} onFinish={this.handleChangeTrack}>
+            {this.renderTimer}
+          </Timer>
         }
       </div>
     )

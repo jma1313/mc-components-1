@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import { number, func } from 'prop-types'
 
 export default class Timer extends PureComponent {
@@ -6,7 +6,9 @@ export default class Timer extends PureComponent {
     /* time in seconds */
     time: number.isRequired,
     onFinish: func.isRequired,
+    children: func.isRequired,
   }
+
   constructor (props) {
     super(props)
 
@@ -28,10 +30,15 @@ export default class Timer extends PureComponent {
 
   reduceTimer = () => {
     const { time } = this.state
-    this.setState({ time: time - 1 })
+    const { onFinish } = this.props
+
+    const reducedTime = time - 1
+    this.setState({ time: reducedTime })
     // recursive function
-    if (time - 1 > 0) {
+    if (reducedTime > 0) {
       this.setTimer()
+    } else if (reducedTime === 0) {
+      onFinish()
     }
   }
 
@@ -44,9 +51,8 @@ export default class Timer extends PureComponent {
 
   render () {
     const { time } = this.state
+    const { children } = this.props
 
-    return (
-      <p>{time}</p>
-    )
+    return children({ time, totalTime: this.props.time })
   }
 }

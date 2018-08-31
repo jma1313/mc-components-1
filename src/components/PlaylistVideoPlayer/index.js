@@ -23,12 +23,7 @@ export default class PlaylistVideoPlayer extends PureComponent {
       isLastVideo,
       showInitialScreen: props.currentTrack.position === 1,
       nextTrack: !isLastVideo ? this.getNextTrack() : null,
-      videoHasEnded: false,
     }
-  }
-
-  handleVideoEnd = () => {
-    this.setState({ videoHasEnded: true })
   }
 
   handleChangeTrack = (trackId) => {
@@ -55,8 +50,8 @@ export default class PlaylistVideoPlayer extends PureComponent {
       onResume={onResume}
     />
 
-  renderEndScreen = () => {
-    const { isLastVideo, nextTrack, videoHasEnded } = this.state
+  renderEndScreen = ({ isActive }) => {
+    const { isLastVideo, nextTrack } = this.state
 
     if (!isLastVideo) {
       return (
@@ -64,7 +59,7 @@ export default class PlaylistVideoPlayer extends PureComponent {
           {...nextTrack}
           playlistName={this.props.playlist.name}
           onChangeTrack={this.handleChangeTrack}
-          showTimer={videoHasEnded}
+          showTimer={isActive}
         />
       )
     }
