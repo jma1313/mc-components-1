@@ -4,6 +4,7 @@ import _ from 'lodash'
 
 import VideoPlayer from '../VideoPlayer'
 import PlaylistInitialScreen from '../PlaylistInitialScreen'
+import PlaylistEndScreen from '../PlaylistEndScreen'
 
 export default class PlaylistVideoPlayer extends PureComponent {
   static propTypes = {
@@ -16,22 +17,36 @@ export default class PlaylistVideoPlayer extends PureComponent {
   constructor (props) {
     super(props)
 
+    const isLastVideo = this.isLastVideo()
+
     this.state = {
+      isLastVideo,
       showInitialScreen: props.currentTrack.position === 1,
-      showEndScreen: false,
-      nextTrack: null,
+      nextTrack: !isLastVideo ? this.getNextTrack() : null,
+      videoHasEnded: false,
     }
   }
 
-  handleEndVideo = () => {
+  handleVideoEnd = () => {
+    this.setState({ videoHasEnded: true })
+  }
+
+  handleChangeTrack = (trackId) => {
+    console.log(`change track: ${trackId}`)
+  }
+
+  isLastVideo = () => {
     const { tracks, currentTrack } = this.props
     const tracksSize = Object.keys(tracks).length
-    const isLastVideo = tracksSize === currentTrack.position
-    if (!isLastVideo) {
-      const nextPosition = currentTrack.position
-      const nextTrack = _.find(tracks, track => track.position === nextPosition)
-      this.setState({ nextTrack, showEndScreen: true })
-    }
+    return tracksSize === currentTrack.position
+  }
+
+  getNextTrack = () => {
+    const { tracks, currentTrack } = this.props
+    const nextPosition = currentTrack.position + 1
+    const nextTrack = _.find(tracks, track =>
+      track.attributes.position === nextPosition).attributes
+    return nextTrack
   }
 
   renderInitialScreen = ({ onResume }) =>
@@ -40,6 +55,22 @@ export default class PlaylistVideoPlayer extends PureComponent {
       onResume={onResume}
     />
 
+  renderEndScreen = () => {
+    const { isLastVideo, nextTrack, videoHasEnded } = this.state
+
+    if (!isLastVideo) {
+      return (
+        <PlaylistEndScreen
+          {...nextTrack}
+          playlistName={this.props.playlist.name}
+          onChangeTrack={this.handleChangeTrack}
+          showTimer={videoHasEnded}
+        />
+      )
+    }
+    return null // return Rate Playlist component
+  }
+
   render () {
     const { currentVideo } = this.props
     const { showInitialScreen } = this.state
@@ -47,9 +78,12 @@ export default class PlaylistVideoPlayer extends PureComponent {
     return (
       <VideoPlayer
         videoId={currentVideo.brightcoveId}
-        beforescreenComponent={showInitialScreen && this.renderInitialScreen}
+        beforescreenComponent={
+          showInitialScreen ? this.renderInitialScreen : null
+        }
+        endscreenComponent={this.renderEndScreen}
         hasAutoplay={false}
-        onEnd={this.handleEndVideo}
+        onEnd={this.handleVideoEnd}
       />
     )
   }
