@@ -8,7 +8,11 @@
     transition: transform 0.3s cubic-bezier(0.29, 1.185, 1, 1);
 
     &.mc-animation--animating {
-      transform: scale(1.1);
+      transform: scale(1.05);
+
+      @media only screen and (min-width: $mc-bp-md) {
+        transform: scale(1.1);
+      }
     }
   }
 
@@ -31,6 +35,16 @@
 
     &.mc-animation--animating {
       transform: translateY(-0.75em);
+    }
+  }
+
+  &--fade {
+    opacity: 0;
+
+    transition: 0.3s ease opacity;
+
+    &.mc-animation--animating {
+      opacity: 1;
     }
   }
 }

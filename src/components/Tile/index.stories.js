@@ -129,31 +129,29 @@ storiesOf('components|Tiles', module)
         <div className='col-lg-4 col-md-6'>
           <DocSection title='Swap'>
             <HoverHandler>
-              {({ hovering }) =>
+              {({ intent }) =>
                 <AnimationHandler
                   type='zoom'
-                  animating={hovering}
+                  animating={intent}
                 >
                   <Tile>
-                    {!hovering &&
-                      <Fragment>
-                        <TileImage imageUrl={shondaRhimesThumbnail} />
-                        <TileOverlay type='gradient-bottom' />
-                      </Fragment>
+                    <TileImage imageUrl={shondaRhimesThumbnail} />
+
+                    {!intent &&
+                      <TileOverlay type='gradient-bottom' />
                     }
-                    {hovering &&
-                      <Fragment>
-                        <TileVideo
-                          videoId='5450137526001'
-                          autoPlay
-                          loop
-                          muted
-                        />
-                      </Fragment>
+
+                    {intent &&
+                      <TileVideo
+                        videoId='5450137526001'
+                        autoPlay
+                        loop
+                        muted
+                      />
                     }
 
                     <TileCaption
-                      position={hovering
+                      position={intent
                         ? 'left below'
                         : 'left bottom'
                       }
@@ -166,6 +164,53 @@ storiesOf('components|Tiles', module)
                       </h4>
                     </TileCaption>
                   </Tile>
+                </AnimationHandler>
+              }
+            </HoverHandler>
+          </DocSection>
+        </div>
+
+        <div className='col-lg-4 col-md-6'>
+          <DocSection title='Extra Content'>
+            <HoverHandler>
+              {({ hovering }) =>
+                <AnimationHandler
+                  type='zoom'
+                  animating={hovering}
+                >
+                  <div>
+                    <Tile>
+                      <TileImage imageUrl={shondaRhimesThumbnail} />
+                      <TileOverlay type='gradient-bottom' />
+
+                      {hovering &&
+                        <TileVideo
+                          videoId='5450137526001'
+                          autoPlay
+                          loop
+                          muted
+                        />
+                      }
+                    </Tile>
+
+                    <div className='test-caption'>
+                      <h3 className='mc-text-h4 mc-text--uppercase'>
+                        Shonda Rhimes
+                      </h3>
+                      <h4 className='mc-text-h5 mc-text--uppercase mc-text--muted mc-text--light mc-text--airy'>
+                        Teaches Writing
+                      </h4>
+
+                      <AnimationHandler
+                        type='fade'
+                        animating={hovering}
+                      >
+                        <div className='playlist-details'>
+                          shit that only shows up when hovering
+                        </div>
+                      </AnimationHandler>
+                    </div>
+                  </div>
                 </AnimationHandler>
               }
             </HoverHandler>
